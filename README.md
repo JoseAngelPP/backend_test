@@ -14,3 +14,7 @@
 Celery is used to asyn task to send emails, we can stop it
 
 `make stop-celery`
+
+### Run tests
+
+`make tests`
