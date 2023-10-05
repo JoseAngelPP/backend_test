@@ -10,6 +10,9 @@
 ### Start project
 `make up`
 
+### Run fixtures
+`make fixtures`
+
 ### (Optional) Stop Celery
 Celery is used to asyn task to send emails, we can stop it
 

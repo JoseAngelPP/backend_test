@@ -44,4 +44,4 @@ lint:
 	docker-compose exec app isort . --profile black
 
 fixtures:
-	docker-compose exec tomato python manage.py loaddata groups.json
+	docker-compose run --rm app python fixtures.py
