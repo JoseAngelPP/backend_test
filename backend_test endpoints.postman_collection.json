@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "db4d319b-aba1-4407-97f1-f0ec176be1c0",
+		"name": "backend_test endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test3@gmail.com\",\n    \"password\": \"123\",\n    \"username\": \"Admin3\",\n    \"groups\": 1,\n    \"groups_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}api/v0_1/users/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create product",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Lechita de vainilla\",\n    \"description\": \"Lechita de vainilla de 50 ML\",\n    \"brand_id\": 1,\n    \"sku\": \"L009\",\n    \"price\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}api/v0_1/products/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get brand",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 5b83e3b838ae4ab33b0ad7bbbf03de061595d659",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "{{host}}api/v0_1/brands/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"brands",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create brand",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Santa Clara\",\n    \"description\": \"Dta Clara\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}api/v0_1/brands/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"brands",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update product",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Lechita de vainilla 2\",\n    \"description\": \"Lechita de vainilla de 50 ML\",\n    \"brand_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}api/v0_1/products/36/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"products",
+						"36",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete product",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Lechita de vainilla\",\n    \"description\": \"Lechita de vainilla de 50 ML\",\n    \"brand_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}api/v0_1/products/23/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"products",
+						"23",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"Admin\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}api/v0_1/login/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token {{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"password\": \"123\",\n    \"username\": \"Admin\",\n    \"groups\": 1,\n    \"groups_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}api/v0_1/users/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get catalog",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"test@gmail.com\",\n    \"password\": \"123\",\n    \"username\": \"Admin\",\n    \"groups\": 1,\n    \"groups_id\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}api/v0_1/products/",
+					"host": [
+						"{{host}}api"
+					],
+					"path": [
+						"v0_1",
+						"products",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "http://localhost:8080/"
+		},
+		{
+			"key": "token",
+			"value": "5b83e3b838ae4ab33b0ad7bbbf03de061595d659"
+		}
+	]
+}
