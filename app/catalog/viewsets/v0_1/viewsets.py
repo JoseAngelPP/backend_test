@@ -18,7 +18,6 @@ from app.catalog.utils import (
     send_product_updated_email,
 )
 
-
 products_views_total = Gauge("requests_total", "Total number of views")
 
 
