@@ -30,3 +30,9 @@ class Product(TimeStampedMixin):
 
     def __str__(self):
         return self.name
+
+
+class ProductQuery(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    extra_data = models.JSONField(blank=True, default=dict)

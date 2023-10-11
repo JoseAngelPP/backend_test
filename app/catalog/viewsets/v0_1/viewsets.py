@@ -1,11 +1,12 @@
 from datetime import datetime
 
+from prometheus_client import Gauge
 from rest_framework import status, viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 
-from app.catalog.models import Brand, Product
+from app.catalog.models import Brand, Product, ProductQuery
 from app.catalog.serializers.v0_1.serializers import (
     BrandSerializer,
     CreateProductSerializer,
@@ -16,6 +17,9 @@ from app.catalog.utils import (
     send_product_deleted_email,
     send_product_updated_email,
 )
+
+
+products_views_total = Gauge("requests_total", "Total number of views")
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -34,6 +38,18 @@ class ProductViewSet(viewsets.ModelViewSet):
         if self.action == "create":
             return CreateProductSerializer
         return ProductSerializer
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+        extra_data = {
+            "ip": self.request.META.get("REMOTE_ADDR", None),
+            "user_agent": self.request.META.get("HTTP_USER_AGENT", None),
+        }
+        products_views_total.inc()
+
+        ProductQuery.objects.create(product=instance, extra_data=extra_data)
+        return Response(serializer.data)
 
     def perform_create(self, serializer):
         brand_id = self.request.data.get("brand_id")

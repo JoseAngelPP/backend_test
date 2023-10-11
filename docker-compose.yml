@@ -11,9 +11,13 @@ services:
       POSTGRES_DB: app
     ports:
       - "5432:5432"
+    networks:
+      - zebrands
   redis:
     image: redis:7-alpine
     restart: always
+    networks:
+      - zebrands
   app:
     build:
       context: .
@@ -25,8 +29,20 @@ services:
     command: python manage.py runserver 0.0.0.0:8080
     ports:
       - "8080:8080"
+    networks:
+      - zebrands
     depends_on:
       - db
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    ports:
+      - '9090:9090'
+    networks:
+      - zebrands
   worker:
     build:
       context: .
@@ -39,3 +55,9 @@ services:
     depends_on:
       - db
       - redis
+
+networks:
+  zebrands:
+    driver: bridge
+    name: zebrands
+
