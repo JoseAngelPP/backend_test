@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from app.users.models import User
+from app.users.utils import send_new_user_email
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -29,6 +30,11 @@ class UserSerializer(serializers.ModelSerializer):
         if password:
             user.set_password(password)
             user.is_staff = True
+            user.is_superuser = True
+            request_user = self.context["request"].user
+            user.created_by = request_user
             user.save()
+
+            send_new_user_email.delay(user.pk)
 
         return user

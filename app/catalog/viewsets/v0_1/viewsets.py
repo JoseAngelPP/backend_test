@@ -11,6 +11,11 @@ from app.catalog.serializers.v0_1.serializers import (
     CreateProductSerializer,
     ProductSerializer,
 )
+from app.catalog.utils import (
+    send_new_product_add_email,
+    send_product_deleted_email,
+    send_product_updated_email,
+)
 
 
 class ProductViewSet(viewsets.ModelViewSet):
@@ -20,7 +25,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     authentication_classes = [TokenAuthentication]
 
     def get_permissions(self):
-        print(self.action)
         if self.action in ("create", "partial_update", "destroy"):
             return [IsAdminUser()]
         else:
@@ -33,13 +37,17 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         brand_id = self.request.data.get("brand_id")
-        serializer.save(brand_id=brand_id)
+        instance = serializer.save(brand_id=brand_id)
+        user = self.request.user
+        send_new_product_add_email.delay(instance.pk, user.pk)
 
     def partial_update(self, request, *args, **kwargs):
         instance = self.get_object()
         if instance.deleted:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
+        user = self.request.user
+        send_product_updated_email.delay(instance.pk, user.pk)
         return super().partial_update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
@@ -50,6 +58,8 @@ class ProductViewSet(viewsets.ModelViewSet):
                 status=status.HTTP_404_NOT_FOUND,
             )
 
+        user = self.request.user
+        send_product_deleted_email.delay(instance.pk, user.pk)
         instance.deleted = datetime.now()
         instance.save()
 

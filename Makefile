@@ -12,10 +12,16 @@ build-worker:
 	docker-compose build worker
 
 up:
-	docker-compose up -d
+	docker-compose up
+
+stop:
+	docker-compose stop
 
 stop-celery:
 	docker-compose stop worker
+
+logs-db:
+	docker-compose logs -f
 
 logs-db:
 	docker-compose logs -f db

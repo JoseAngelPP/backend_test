@@ -178,19 +178,6 @@ CELERY_TASK_DEFAULT_PRIORITY = 1
 REDIS_URL = CELERY_REDIS_URL
 
 #
-# Celery BEAT CONFIG
-#
-CELERY_BEAT_SCHEDULE = {
-    #
-    # Run every 30 seconds
-    #
-    "process_queue_messages": {
-        "task": "app.queue.tasks.process_queue_messages",
-        "schedule": 30.0,
-    }
-}
-
-#
 # Django rest framework
 #
 REST_FRAMEWORK = {
@@ -212,3 +199,13 @@ REST_FRAMEWORK = {
 # CORS CONFIG
 #
 CORS_ALLOW_HEADERS = (*default_headers,)
+
+
+# settings.py
+
+MAILGUN_API_URL = os.getenv("MAILGUN_API_URL")
+MAILGUN_PRIVATE_API_KEY = os.getenv("MAILGUN_PRIVATE_API_KEY")
+MAILGUN_HOST_USER = os.getenv(
+    "MAILGUN_HOST_USER",
+    "Mailgun Sandbox <postmaster@sandboxc9e883368e234f119a71af6c1399dede.mailgun.org>",
+)
